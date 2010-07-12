@@ -63,7 +63,11 @@
 connect(Host, Port, Options, Timeout, true) ->
     ssl:connect(Host, Port, Options, Timeout);
 connect(Host, Port, Options, Timeout, false) ->
-    gen_tcp:connect(Host, Port, Options, Timeout).
+    try
+		gen_tcp:connect(Host, Port, Options, Timeout)
+	catch
+		exit:badarg -> {error, badarg}
+	end.
 
 %% @spec (Socket, SslFlag) -> {ok, Data} | {error, Reason}
 %%   Socket = socket()

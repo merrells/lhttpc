@@ -85,6 +85,8 @@ request(From, Host, Port, Ssl, Path, Method, Hdrs, Body, Options) ->
             {response, self(), {error, Reason}};
         error:closed ->
             {response, self(), {error, connection_closed}};
+        error:badarg ->
+            {response, self(), {error, badarg}};
         error:Error ->
             {exit, self(), {Error, erlang:get_stacktrace()}}
     end,
